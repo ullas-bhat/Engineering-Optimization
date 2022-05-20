@@ -37,7 +37,7 @@ end
 cc = [0.01 0.02 0.05];
 contour(D, d, fobj,[cc 10*cc 100*cc 1000*cc 10000*cc 100000*cc 1000000*cc])
 xlabel('Coil diameter D (m)'), ylabel('Wire diameter d (m)'), ...
-   title({'Spring stiffness and'; 'frequency optimization problem (w = 1.0)'})
+   title('Figure 1     Spring stiffness and frequency optimization problem (w = 1.0)')
 hold on
 [C,h] = contour(D,d,stiffness,[10000 10000], 'Color', '#EDB120');
 h.LineWidth = 1;
@@ -67,7 +67,7 @@ while cycle < max_cycles
    plot(xq(1),xq(2),'o');
    
 	% Forward finite diffence gradients of objective function and constraints
-	hi=1e-7;
+	hi=1e-8;
 	alpha=0.0;
 	sq=[0 0];
 	% Objective function in point xq
@@ -142,3 +142,4 @@ end
 fprintf('Optimum point = [%f %f]\n', xq(1), xq(2));
 
 disp('fval at optimum = ' + string(fval))
+

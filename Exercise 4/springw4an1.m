@@ -6,7 +6,7 @@
 % including visualization.
 
 % Initialization
-clf, clear, clc
+clf, hold off, clear, clc
 format long
 
 % 1. Problem visualization
@@ -37,12 +37,13 @@ end
 cc = [0.01 0.02 0.05];
 contour(D, d, fobj,[cc 10*cc 100*cc 1000*cc 10000*cc 100000*cc 1000000*cc])
 xlabel('Coil diameter D (m)'), ylabel('Wire diameter d (m)'), ...
-   title({'Spring stiffness and'; 'frequency optimization problem (w = 1.0)'})
+   title('Spring stiffness and frequency optimization problem (w = 1.0)')
 hold on
 [C,h] = contour(D,d,stiffness,[10000 10000], 'Color', '#EDB120');
 h.LineWidth = 1;
 [C,h] = contour(D,d,freq,[300 300], 'Color', '#77AC30');
 h.LineWidth = 1;
+
 grid
 
 %end problem visualization
@@ -57,17 +58,14 @@ cycle = 0
 D = xq(1)
 d = xq(2)
 
-% Maximum number of cycles allowed for the optimizer:
-max_cycles = 100;
-
 % Loop over optimization cycle:
-while cycle < max_cycles
+while again >= 1,
    cycle = cycle +1
    % Plot marker in current design point:
    plot(xq(1),xq(2),'o');
    
 	% Forward finite diffence gradients of objective function and constraints
-	hi=1e-7;
+	hi=1e-8;
 	alpha=0.0;
 	sq=[0 0];
 	% Objective function in point xq
@@ -85,6 +83,9 @@ while cycle < max_cycles
 
     % Normalizing sq:
     sq = sq ./ sqrt(sq(1)^2 + sq(2)^2)
+
+    % Scaling the search vector:
+    % sq = sq ./ 1000;
 
     % Calculating max alpha to ensure the values lie in the design space:
     for i = 1:2
@@ -124,21 +125,10 @@ while cycle < max_cycles
    % Update design point:
    xq = xnew;
    
-    % Convergence criterion:
-    if abs(fx - fval) < 1E-06
-        break;
-    end
+   % Continu optimization?
+   again = input('  Another optimization cycle? (0: No  1: Yes):')
+   if again == 0, return; end;
 
-end  % end optimization cycle (while-loop)
-hold off
-% End messages
-disp('--')
-if max_cycles == cycle
-    disp('Max. cycles reached without convergence')
-else
-    disp('No. of optimization cycles = ' + string(cycle))
-end
+end;  % end optimization cycle (while-loop)
 
-fprintf('Optimum point = [%f %f]\n', xq(1), xq(2));
-
-disp('fval at optimum = ' + string(fval))
+%end 
