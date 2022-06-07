@@ -7,7 +7,7 @@
 % glinw7.m (linearized constraints).
 
 % Initialization
-clf, hold off
+clf, hold off, clear
 format long
 % Design point, x0, where problem is linearized to be given outside springw7ex1.
 x0 = [0.035 0.0045] 
@@ -82,40 +82,35 @@ plot(x0(1),x0(2),'o','MarkerSize',20);
 ml=[0.003 0.0003]
 k=10;
 beta=1;
-x0 = [0.035 0.0045 1] 
-x0 = [0.032000000000000 0.004800000000000 0.206268268661973]
-x0=[ 0.029000000000000 0.004633599827896 0.056914539273964]
-x0=[ 0.026000000000000 0.004333599827896 0]
-x0=[ 0.024352731922351 0.004033599827896 0]
-x0=[ 0.023392460922052 0.003733599827896 0]
-x0=[0.023047777700152  0.003638067181243 0]
-x0=[   0.023041162224912  0.003636596561956 0]
+x0 = [0.030 0.0045 1] 
 
+convergence = 1;
+iter_count = 0;
+while iter_count <= 7
+    iter_count = iter_count + 1;
+    Df= dfw7ex1(x0) ;
+    f=[Df(1) Df(2) k];
 
-Df= dfw7ex1(x0) 
+    Dg= dgw7ex1(x0);
+    [g,geq]=springcon3(x0);
 
-f=[Df(1) Df(2) k]
+    lb=[x0(1)-ml(1) x0(2)-ml(2) 0];
+    ub=[x0(1)+ml(1) x0(2)+ml(2) Inf];
 
-Dg= dgw7ex1(x0)
-[g,geq]=springcon3(x0)
+    A=[Dg(1,1) Dg(1,2) -1
+       Dg(2,1) Dg(2,2) -1
+       Dg(3,1) Dg(3,2) -1
+       Dg(4,1) Dg(4,2) -1
+       Dg(5,1) Dg(5,2) -1 ];
 
-A=[Dg(1,1) Dg(1,2) -1
-   Dg(2,1) Dg(2,2) -1
-   Dg(3,1) Dg(3,2) -1
-   Dg(4,1) Dg(4,2) -1
-   Dg(5,1) Dg(5,2) -1 ];
+    b = [Dg(1,1)*x0(1)+Dg(1,2)*x0(2)-g(1) Dg(2,1)*x0(1)+Dg(2,2)*x0(2)-g(2) Dg(3,1)*x0(1)+Dg(3,2)*x0(2)-g(3) Dg(4,1)*x0(1)+Dg(4,2)*x0(2)-g(4) Dg(5,1)*x0(1)+Dg(5,2)*x0(2)-g(5)];
+    x=linprog(f,A,b,[],[],lb,ub);
+    convergence = abs(x(1) - x0(1));
+    x0 = x;
+end
 
-b = [Dg(1,1)*x0(1)+Dg(1,2)*x0(2)-g(1) Dg(2,1)*x0(1)+Dg(2,2)*x0(2)-g(2) Dg(3,1)*x0(1)+Dg(3,2)*x0(2)-g(3) Dg(4,1)*x0(1)+Dg(4,2)*x0(2)-g(4) Dg(5,1)*x0(1)+Dg(5,2)*x0(2)-g(5)]
-
-lb=[x0(1)-ml(1) x0(2)-ml(2) 0];
-ub=[x0(1)+ml(1) x0(2)+ml(2) Inf];
-
-
-
-xfinal=linprog(f,A,b,[],[],lb,ub)
-
-
-%Relaxed Constraint
+x
+iter_count
 
 
 
