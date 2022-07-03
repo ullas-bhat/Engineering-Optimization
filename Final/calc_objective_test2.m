@@ -4,7 +4,7 @@
 
     % Importing motor constants
     constants;
-    [g0,h0]=calc_constraints(x_scaled)
+    [g,h]=calc_constraints(x_scaled)
     x = descale(x_scaled, x_ref);
     lb=[0.1,0.1,0.1]
     ub=[10,10,10]
@@ -42,5 +42,5 @@
 %     total_mass = chamber_mass + injector_mass + nozzle_convergent_mass + nozzle_divergent_mass; % total mass of the motor (kg)
     total_mass = chamber_mass + injector_mass + nozzle_divergent_mass + mass_UDMH_tank + mass_N2O4_tank; % total mass of the motor (kg)
 
-    total_mass=total_mass+15000000*(max(0,g0)^2)+10000000*(h0)^2+ 10000000*(max(0,0.1-lb(1))^2)  + 10000000*(max(0,0.1-lb(2))^2) + 10000000*(max(0,0.1-lb(3))^2) + 10000000*(max(0,ub(1)-10)^2) + 10000000*(max(0,ub(2)-10)^2) + 10000000*(max(0,ub(3)-10)^2) 
+    total_mass=total_mass+150000000*(max(0,g)^2)+10000000*(h)^2+ 10000000*(max(0,0.1-lb(1))^2)  + 10000000*(max(0,0.1-lb(2))^2) + 10000000*(max(0,0.1-lb(3))^2) + 10000000*(max(0,ub(1)-10)^2) + 10000000*(max(0,ub(2)-10)^2) + 10000000*(max(0,ub(3)-10)^2);
 end
