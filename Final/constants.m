@@ -29,6 +29,8 @@ A_t_ref = 0.1886;   % throat area (m2)
 A_e_ref = 0.7698;   % exit area (m2)
 x_ref = [P_c_ref, A_t_ref, A_e_ref];
 
+mass_flow_ref = Gamma * P_c_ref * A_t_ref / sqrt(R * T_c);
+
 % Fuel properties
 rho_N2O4 = 1.44246E+03; % N2O4 density (kg/m3)
 rho_UDMH = 791; % UDMH density (kg/m3)

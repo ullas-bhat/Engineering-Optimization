@@ -40,5 +40,6 @@ function [g, h] = calc_constraints(x_scaled)
 
     g(1) = 1 - Isp/Isp_ref;   % Isp constraint
     h(1) = 1 - thrust_factor/thrust_factor_ref; % thrust constraint
+    h(2) = 1 - mass_flow/mass_flow_ref;
 
 end
