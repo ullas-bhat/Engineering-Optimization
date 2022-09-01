@@ -1,5 +1,4 @@
-function x_scaled = scale(x, x_ref)
-    for i = 1:length(x)
-        x_scaled(i) = x(i) / x_ref(i);
-    end
+function x_scaled = scale(x)
+    constants;
+    x_scaled = x ./ x_ref;
 end

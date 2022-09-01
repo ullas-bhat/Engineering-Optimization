@@ -1,45 +1,48 @@
-% Script defining constants used for calculations of mass and motor
-% performance
+% Script containing all the required constants:
+g = 1.2096;
+R = 418;
+T_c = 2964;
+G = sqrt(g) * (2/(g+1))^((g+1)/(2*g-2));
+P_a = 0.211E+05;
+accel_g = 9.81;
 
-% Combustion properties
-gamma_val = 1.2096;    % heat capacity ratio
-R = 418;    % specific gas constant
-T_c = 2964; % flame temperature (K)
-P_a = 0.211E+05;    % atmospheric pressure (bar)
-g0 = 9.81 ;   % acceleration due to gravity (m/s2)
-Gamma = sqrt(gamma_val) * (2/(gamma_val + 1))^((gamma_val + 1)/(2*gamma_val - 2));  % Vandenkerckhove function
+rho_cn = 8980;
+sigma_cn = 748E+06;
 
-% Material properties
-% Haynes 188
-rho_val =  8980;    % density (kg/m3)
-sigma_val = 748E+06;   % ultimate strength (N/m2)
+L_c = 1.3;
 
-% Chamber constants
-L_c = 1.3;   % combustion chamber length (m);
+alpha_div = deg2rad(11.7);
 
-% Nozzle constants
-alpha_val = 11.7; % divergent half angle (deg)  atand( (R_e - Rt)/L )
-%beta = 40; % convergent half angle (deg)
+f = 1.5;
 
-f = 1.5;    % safety factor
+P_c_ref = 58E+05;
+A_t_ref = 0.1886;
+A_e_ref = 0.7698;
+x_ref = [P_c_ref A_t_ref A_e_ref]';
 
-% Reference motor values
-P_c_ref = 58E+05;  % chamber pressure (Pa)
-A_t_ref = 0.1886;   % throat area (m2)
-A_e_ref = 0.7698;   % exit area (m2)
-x_ref = [P_c_ref, A_t_ref, A_e_ref];
+mass_flow_ref = G * P_c_ref * A_t_ref / sqrt(R * T_c);
 
-mass_flow_ref = Gamma * P_c_ref * A_t_ref / sqrt(R * T_c);
+rho_N2O4 = 1.44246E+03;
+rho_UDMH = 791;
 
-% Fuel properties
-rho_N2O4 = 1.44246E+03; % N2O4 density (kg/m3)
-rho_UDMH = 791; % UDMH density (kg/m3)
+mass_N2O4 = 105462.963;
+mass_UDMH = 62037.03704;
 
-m_N2O4 = 105462.963;    
-m_UDMH = 62037.03704;
+R_tank = 1.9;    
+rho_tank = 2810;  
+sigma_tank = 275E+06;   
 
-R_tank = 1.9;   % fuel tank radii (m)
-rho_tank = 2810;
-sigma_tank = 275E+06;
+V_UDMH = mass_UDMH / rho_UDMH; 
+V_N2O4 = mass_N2O4 / rho_N2O4;
 
-mass_dry = 17515;
+L_UDMH_tank = (1.1*V_UDMH - 4*pi*R_tank^3/3) / (pi*R_tank^2);
+L_N2O4_tank = (1.1*V_N2O4 - 4*pi*R_tank^3/3) / (pi*R_tank^2);
+
+mass_dry_ref = 31168.0910728278;
+thrust_ref = 1.7426E+06; 
+Isp_ref = 277.9207;
+
+thrust_factor_ref = thrust_ref / ((mass_dry_ref + mass_N2O4 + mass_UDMH) * accel_g);
+
+
+
