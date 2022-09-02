@@ -1,15 +1,17 @@
-clc, clear
 
-clc, clear
-x = [0.5 0.5 0.5]';
-[x_opt, f_val, exit_flag, iter] = steepest_descent(@f_unconstrained, x, @forward_diff)
+x = [1 1 1]'
+%[gen_count,Best_value,Best_vector,exit_flag]=Genetic_Algoirthm(@f_unconstrained,0.5,10,3,100,50,30,1e-6)
 
 
+options = optimoptions('fmincon','Display','iter','Algorithm','sqp',StepTolerance=1e-8);
+%[x,fval]=fmincon(@objective_function,x,[],[],[],[],[],[],@constraint_functions,options)
 
+%[x,fval,exitflag,output] = fminunc(@f_unconstrained,x)
 
+[x,fval]=ga(@objective_function,3,[],[],[],[],[],[],@constraint_functions)
 function f_val = f_unconstrained(x)
     [g, h] = constraint_functions(x);
-    p = 100;
+    p = 10000;
     con_sum = 0;
 
     for i = 1:length(g)

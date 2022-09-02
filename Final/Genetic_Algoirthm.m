@@ -10,7 +10,7 @@ converge_Tol_F=0;
 Top_90_prev=ones(1,90);
 exit_flag=0;
 %Normalized Max Spread For Mutations
-sigma=0.15;
+sigma=0.5;
 Best_value=99999999999999999999999;
 %Initial Pop
 for i=1:population
@@ -54,30 +54,44 @@ Remaining_Array_x0=Array(2:1+x0_size,Elite_count:end);
 
 %Remaining 80 percent crossover from rest and 20 percent mutation
 
-crossover_population=round(Remaining_population*0.8);
+crossover_population=round(Remaining_population);
 mutation_population=round(Remaining_population*0.2);
-
+w=[0.2]
+for i=2:10
+w(i)=w(i-1)*0.95  
+end    
+for i=10:population
+    w(i)=0.1
+end
 %Crossover
 Crossovers=[];
 for i=1:crossover_population
-   parent_one=Remaining_Array_x0(1:x0_size,randperm(Remaining_population,1)) ; 
-   parent_two=Remaining_Array_x0(1:3,randperm(crossover_population,1))  ;
-   
+ %  parent_one=Array(2:1+x0_size,randperm(population,1)) ; 
+   %parent_two=Array(2:1+x0_size,randperm(population,1))  ;
+   val=randsample(population,2,true,w);
+   parent_one=Array(2:1+x0_size,val(1));
+   parent_two=Array(2:1+x0_size,val(2));
+   chance=randperm(2,1);
+   if chance==1
    child=[parent_one(1),parent_two(2),parent_one(1)];
+   else
+   child=[parent_one(2),parent_two(1),parent_one(2)];
+   end
    Crossovers(1:x0_size,end+1)=child;
 end
 
 %Mutation
 Mutations=[];
 for i=1:mutation_population
-   parent_one=Remaining_Array_x0(1:x0_size,randperm(Remaining_population,1)) ; 
+    k=randperm(crossover_population,1)
+   parent_one=Crossovers(1:x0_size,k) ; 
    j=randperm(x0_size,1);
    child=parent_one;
    child(j)=child(j)+(-sigma+(2*sigma)*rand);
    if child(j)<0
-       child(j)=0.002;
+       child(j)=20;
    end
-   Mutations(1:x0_size,end+1)=child; 
+   Crossovers(j,k)=child(j) 
 end
 
 %save needed for next convegence and increment gen
@@ -94,5 +108,3 @@ end
 
 end
 
-
-end
