@@ -1,7 +1,7 @@
 % Script to perform SQP optimization:
 clc, clear
 max_iter = 10;
-x0 = [1 1 1]';    % Initial guess
+x0 = [1.5 1.5 1.5]';    % Initial guess
 lambda0 = [0 0]';     % Initial Lagrange equality multipliers
 mu0 = 0;              % Initial lagrange inequality multiplier
 
@@ -27,6 +27,8 @@ while ~convergence
     lambda = multiplier_update(1:2);    % Lagrange multipliers for equality constraints
     mu = multiplier_update(3);        % Lagrange multiplier for inequality constraint
     x = x0 + delta_x;   % Update x
+    % Ensuring x is not negative
+    x = max(0, x);
     iter = iter + 1;    
     dL = forward_diff(@(x) lagrangian(x, lambda, mu), x);   % Calculate Lagrangian gradient
 

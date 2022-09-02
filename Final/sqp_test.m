@@ -2,7 +2,7 @@
 % With approximated Hessians
 clc, clear
 max_iter = 10;
-x0 = [1.2 0.5 0.5]';    % Initial guess
+x0 = [1.5 1.5 1.5]';    % Initial guess
 lambda0 = [0 0]';     % Initial Lagrange equality multipliers
 mu0 = 0;              % Initial lagrange inequality multiplier
 

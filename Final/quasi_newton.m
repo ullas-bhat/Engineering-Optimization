@@ -64,14 +64,6 @@ fprintf('Exit flag = %d\n', exit_flag);
 
 
 
-% Converting constrained optimization to unconstrained optimization
-function f_val = f_unconstrained(x)
-    p = 1e6;
-    [g, h] = constraint_functions(x);
-    f_val = objective_function(x) + p * sum(max(0, g).^2) + p * sum(h.^2);
-end
-
-
 
 % function [x_opt, f_val, exit_flag, iter] = quasi_newton(f, x0, df, max_iter)
     

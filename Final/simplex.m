@@ -1,22 +1,20 @@
 % Script to perform Nelder-Mead simplex optimization:
 clc, clear
-max_iter = 250;
+max_iter = 1000; % maximum number of iterations
 
-x0 = [1 1 1]';
+x0 = [1.2 1.2 1.2]';  % initial guess
 
 % Creating inital simplex
 x = [x0 x0+0.1*rand(3,1) x0+0.1*rand(3,1) x0+0.1*rand(3,1)];
 
-
-
 % Transformatin parameters:
-alpha = 1;
-beta = 0.5;
-gamma = 2;
-delta = 0.5;
+alpha = 1;  % reflection
+beta = 0.5; % contraction
+gamma = 2;  % expansion
+delta = 0.5;    % shrink
 
 % Simplex loop
-convergence = 0;
+convergence = false;
 iter = 0;
 
 fprintf('Iterations:\tFunction value:\tTransformation:\n')

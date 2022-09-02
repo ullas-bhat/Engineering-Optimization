@@ -8,12 +8,12 @@ iter = 0;               % Iteration counter
 fprintf('Iteration:\tFirst-order optimality:\tStep size:\n');
 
 while ~convergence
-    if mod(iter, length(x0)) == 0
-        s = -forward_diff(@f_unconstrained, x0);
+    if mod(iter, length(x0)) == 0   % Reset search direction
+        s = -forward_diff(@f_unconstrained, x0);        
     else
         df1 = forward_diff(@f_unconstrained, x0);
         df2 = forward_diff(@f_unconstrained, x_prev);
-        s = -df1 + (mag(df1)^2 / mag(df2)^2) * s; 
+        s = -df1 + (mag(df1)^2 / mag(df2)^2) * s;   % Calculate search direction   
     end
     s = s / mag(s);                         % Normalize search direction
     alpha = fminbnd(@(alpha) f_unconstrained(x0 + alpha*s), 0, 1);  % Line search
@@ -29,15 +29,15 @@ while ~convergence
     if iter >= max_iter
         convergence = true;
         exit_flag = 0;
-        fprintf('Maximum number of iterations reached.')
+        fprintf('Maximum number of iterations reached.\n')
     elseif mag(forward_diff(@f_unconstrained, x)) <= 1E-4
         convergence = true;
         exit_flag = 1;
-        fprintf('Gradient tolerance reached.')
+        fprintf('Gradient tolerance reached.\n')
     elseif mag(x - x0) <= 1E-4
         convergence = true;
         exit_flag = 2;
-        fprintf('Step size tolerance reached.')
+        fprintf('Step size tolerance reached.\n')
     end
 
     % Updating values:
