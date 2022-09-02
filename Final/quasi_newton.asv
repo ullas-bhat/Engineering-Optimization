@@ -6,6 +6,7 @@ B = eye(length(x0));    % Initial Hessian approximation
 convergence = false;    % Flag to indicate convergence
 iter = 0;               % Iteration counter
 
+
 fprintf('Iteration:\tFirst-order optimality:\tStep size:\n');
 while ~convergence
     s = -B * forward_diff(@f_unconstrained, x0);    % Search direction
@@ -70,8 +71,6 @@ function f_val = f_unconstrained(x)
     [g, h] = constraint_functions(x);
     f_val = objective_function(x) + p * sum(max(0, g).^2) + p * sum(h.^2);
 end
-
-
 
 % function [x_opt, f_val, exit_flag, iter] = quasi_newton(f, x0, df, max_iter)
     
