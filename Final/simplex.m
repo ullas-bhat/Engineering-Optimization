@@ -2,7 +2,7 @@
 clc, clear
 max_iter = 1000; % maximum number of iterations
 
-x0 = [1.2 1.2 1.2]';  % initial guess
+x0 = [2.11 1.82 2.25]';  % initial guess
 
 % Creating inital simplex
 x = [x0 x0+0.1*rand(3,1) x0+0.1*rand(3,1) x0+0.1*rand(3,1)];
@@ -18,6 +18,7 @@ convergence = false;
 iter = 0;
 
 fprintf('Iterations:\tFunction value:\tTransformation:\n')
+tic
 while ~convergence
 f = [f_unconstrained(x(:,1)) f_unconstrained(x(:,2)) f_unconstrained(x(:,3)) f_unconstrained(x(:,4))];  % Evaluating function at each point
 [f_sorted, f_index] = sort(f);  % Sorting function values
@@ -95,7 +96,7 @@ x = x_sorted;   % Updating simplex
 
 
 end
-
+toc
 
 fprintf('Optimization results:\n');
 fprintf('Iterations: %d\n', iter)

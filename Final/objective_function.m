@@ -26,7 +26,7 @@ function mass_scaled = objective_function(x)
     V_N2O4 = mass_N2O4 / rho_N2O4;  % volume of N2O4 [m^3]
     L_UDMH_tank = (1.1*V_UDMH - 4*pi*R_tank^3/3) / (pi*R_tank^2);   % length of UDMH tank [m]
     L_N2O4_tank = (1.1*V_N2O4 - 4*pi*R_tank^3/3) / (pi*R_tank^2);   % length of N2O4 tank [m]
-    mass_dry_ref = 31168.0910728278;    % reference dry mass [kg]
+    mass_dry_ref = 17515;    % reference dry mass [kg]
 
 
 

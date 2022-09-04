@@ -17,7 +17,7 @@ function [g_con, h_con] = constraint_functions(x)
     mass_flow_ref = G * P_c_ref * A_t_ref / sqrt(R * T_c);  % reference mass flow rate [kg/s]
     mass_N2O4 = 105462.963; % mass of N2O4 [kg]
     mass_UDMH = 62037.03704;    % mass of UDMH [kg]
-    mass_dry_ref = 31168.0910728278;    % reference dry mass [kg]
+    mass_dry_ref = 17515;    % reference dry mass [kg]
     thrust_ref = 1.7426E+06;    % reference thrust [N]
     Isp_ref = 277.9207; % reference specific impulse [s]
     thrust_factor_ref = thrust_ref / ((mass_dry_ref + mass_N2O4 + mass_UDMH) * accel_g);    % reference thrust factor
@@ -53,5 +53,4 @@ function [g_con, h_con] = constraint_functions(x)
     g_con(1) = 1 - Isp/Isp_ref; % Isp constraint
     h_con(1) = 1 - thrust_factor/thrust_factor_ref; % thrust factor constraint
     h_con(2) = 1 - mass_flow/mass_flow_ref; % mass flow rate constraint 
-
 end
